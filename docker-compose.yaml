@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  gogs_server:
+    container_name: gogs_git
+    build: .
+    depends_on:
+      - gogs_db
+    volumes:
+      - /var/gogs:/data
+    ports:
+      - "3000:3000"
+
+  gogs_db:
+    container_name: gogs_db
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    volumes:
+      - /var/gogs_db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
